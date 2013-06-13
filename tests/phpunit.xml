@@ -1,0 +1,7 @@
+<phpunit bootstrap="bootstrap.php">
+    <testsuite name="Library Test Suite">
+        <directory>./library</directory>
+    </testsuite>
+    <filter>
+    </filter>
+</phpunit>

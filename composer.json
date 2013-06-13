@@ -1,0 +1,24 @@
+{
+    "name": "zircote/api-problem",
+    "description": "An Api Problem Exception implementation in PHP. See: http://tools.ietf.org/html/draft-nottingham-http-problem for the latest on the specification",
+    "license": "Apache-2.0",
+    "type": "library",
+    "keywords": ["API", "Exception"],
+    "authors": [
+        {
+            "name": "Robert Allen",
+            "email": "zircote@gmail.com"
+        }
+    ],
+    "require-dev": {
+    },
+    "autoload":{
+        "psr-0":{
+            "ApiProblem": "library",
+            "ApiProblemTests":  "tests/library"
+        }
+    },
+    "support": {
+        "source": "https://bitbucket.org/zircote/apiproblem/src"
+    }
+}
