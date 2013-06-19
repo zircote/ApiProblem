@@ -74,7 +74,7 @@ try {
 HTTP/1.0 400 Bad Request
 Access-Control-Allow-Origin: *
 Content-Type: application/api-problem+xml
-Link: <http://api-problem.domain.com/some-url.html>; rel="http://api-problem.domain.com/some-url.html" title="Bad Request"
+Link: <http://api-problem.domain.com/some-url.html>; rel="http://api-problem.domain.com/some-url.html"; title="Bad Request"
 
 
 <?xml version="1.0" encoding="UTF-8"?>
