@@ -88,20 +88,18 @@ class ApiProblem extends Exception
      */
     public function __construct($problemType, $title, $httpStatus=null, $detail=null, $problemInstance=null)
     {
-        $this->problemType = $problemType;
-        $this->title = $title;
+        $this->setProblemType($problemType);
+        $this->setTitle($title);
         $this->message = $title;
         if ($httpStatus) {
             $this->code = $httpStatus;
-        }
-        if ($httpStatus) {
-            $this->httpStatus = $httpStatus;
+            $this->setHttpStatus($httpStatus);
         }
         if ($detail) {
-            $this->detail = $detail;
+            $this->setDetail($detail);
         }
         if ($problemInstance) {
-            $this->problemInstance = $problemInstance;
+            $this->setProblemInstance($problemInstance);
         }
     }
 
