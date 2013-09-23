@@ -1,24 +1,26 @@
 <?php
 /**
- * 
+ *
+ * @license http://www.apache.org/licenses/LICENSE-2.0
+ * Copyright [2012] [Robert Allen]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
-defined('PHPUNIT_TEST_ACTIVE') || define('PHPUNIT_TEST_ACTIVE', true);
-defined('APPLICATION_PATH') || define('APPLICATION_PATH', realpath(dirname(__DIR__)));
-defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'testing');
-
-$config = @include dirname(APPLICATION_PATH) . '/vendor/composer/autoload_namespaces.php';
-
-$paths = array_merge(array(get_include_path()), $config ? : array());
-
-foreach ($paths as $key => $path) {
-    if (is_array($path)) {
-        foreach ($path as $p) {
-            array_unshift($paths, $p);
-        }
-        unset($paths[$key]);
-    }
+define('PHPUNIT_TEST_ACTIVE', true);
+if (file_exists(dirname(__DIR__) . '/vendor/autoload.php')) { // Use local vendor-dir?
+	$loader = require_once(dirname(__DIR__) . '/vendor/autoload.php');
+} else {
+	$loader = require_once(__DIR__ . '/../../../autoload.php');
 }
-
-// Ensure library/ is on include_path
-set_include_path(implode(PATH_SEPARATOR, $paths));
-require_once APPLICATION_PATH . '/vendor/autoload.php';
+$loader->add('ApiProblemTests', __DIR__ . '/library/');

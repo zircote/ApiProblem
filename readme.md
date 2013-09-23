@@ -1,5 +1,9 @@
 # ApiProblem
 
+
+ - [![Master Build Status](https://secure.travis-ci.org/zircote/ApiProblem.png?branch=master)](http://travis-ci.org/zircote/ApiProblem)` `master`
+
+
 `ApiProblem` is an attempt to provide the functionality and problem reporting as defined in 
 [Problem Details for HTTP APIs](http://tools.ietf.org/html/draft-nottingham-http-problem). The goal being a simple 
 Exception wrapper for PHP that can send the desired response in `JSON` and `XML`.

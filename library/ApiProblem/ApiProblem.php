@@ -301,7 +301,7 @@ class ApiProblem extends Exception
         }
         if (version_compare(PHP_VERSION, '5.4.0', '<')) {
             $json = json_encode($result);
-            $json = preg_replace('/\\\//', null, $json);
+            $json = preg_replace('#\\\#', null, $json);
         } else {
             $json = json_encode($result, JSON_UNESCAPED_SLASHES);
         }
