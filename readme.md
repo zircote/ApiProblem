@@ -91,3 +91,88 @@ Link: <http://api-problem.domain.com/some-url.html>; rel="http://api-problem.dom
 </problem>
 
 ```
+
+#### Adding additional headers, i.e. CORS, Auth, etc
+
+```php
+<?php
+$apiProblem = new ApiProblem(
+    'http://api-problem.domain.com/some-url.html',
+    'Unauthorized',
+    401,
+    'some detail',
+    'http://domain.com/this-request'
+);
+
+$apiProblem->setHeader('Access-Control-Allow-Origin', '*');
+$apiProblem->setHeader('WWW-Authenticate', 'bearer realm="my_realm"');
+$apiProblem->sendHTTPResponse(ApiProblem::FORMAT_JSON);
+
+```
+
+#### Result
+
+```http
+HTTP/1.0 401 Unauthorized
+Access-Control-Allow-Origin: *
+WWW-Authenticate: bearer realm="my_realm"
+Content-Type: application/api-problem+json
+Link: <http://api-problem.domain.com/some-url.html>; rel="http://api-problem.domain.com/some-url.html" title="Bad Request"
+
+{
+    "problemType": "http://api-problem.domain.com/some-url.html",
+    "title": "Unauthorized",
+    "httpStatus": 401,
+    "detail": "some detail",
+    "problemInstance": "http://domain.com/this-request"
+}
+
+```
+
+#### Adding extended data to the problem instance:
+
+```php
+<?php
+$apiProblem = new ApiProblem(
+    'http://api-problem.domain.com/some-url.html',
+    'Unauthorized',
+    401,
+    'some detail',
+    'http://domain.com/this-request'
+);
+
+
+$apiProblem->setExtensionData('ext_test', 'etx_test_value');
+$apiProblem->setExtensionData('ext_test_array_i', array('a' => 'a_d', 'b' => 'b_d', 'c' => 'c_d'));
+$apiProblem->setExtensionData('ext_test_array_ni', array('a', 'b', 'c'));
+$apiProblem->sendHTTPResponse(ApiProblem::FORMAT_JSON);
+
+```
+
+#### Result
+
+```http
+HTTP/1.0 401 Unauthorized
+Content-Type: application/api-problem+json
+Link: <http://api-problem.domain.com/some-url.html>; rel="http://api-problem.domain.com/some-url.html" title="Bad Request"
+
+{
+    "problemType": "http://api-problem.domain.com/some-url.html",
+    "title": "Unauthorized",
+    "httpStatus": 401,
+    "detail": "some detail",
+    "problemInstance": "http://domain.com/this-request",
+    "ext_test":"etx_test_value",
+    "ext_test_array_i":{
+        "a":"a_d",
+        "b":"b_d",
+        "c":"c_d"
+    }
+    "ext_test_array_ni":[
+        "a",
+        "b",
+        "c"
+    ]
+}
+
+```

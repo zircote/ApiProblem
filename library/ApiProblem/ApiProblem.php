@@ -39,6 +39,11 @@ class ApiProblem extends Exception
      * @var string
      */
     protected $problemType;
+
+    /**
+     * @var array
+     */
+    protected $headers = array();
     
     /**
      * A short, human-readable summary of the problem type.  It SHOULD NOT change from occurrence to occurrence of the 
@@ -218,6 +223,64 @@ class ApiProblem extends Exception
     }
 
     /**
+     * @param string $name
+     * @param string $value
+     * @return $this
+     */
+    public function setHeader($name, $value)
+    {
+        $this->headers[$name] = $value;
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return string|null
+     */
+    public function getHeader($name)
+    {
+        $name = strtolower($name);
+        if (array_key_exists($name, $this->headers)) {
+            return $this->headers[$name];
+        }
+        return null;
+    }
+    
+    /**
+     *
+     * @param array $headers
+     * @return ApiProblem
+     */
+    public function setHeaders(array $headers)
+    {
+        $this->headers = $headers;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+    
+    protected function flushHeaders($asString = false)
+    {
+        $headers = '';
+        foreach ($this->headers as $key => $value) {
+            $header = sprintf("{$key}: {$value}");
+            if ($asString === true) {
+                header($header);
+            } else {
+                $headers .= $header . "\r\n";
+            }
+        }
+        
+        return $headers;
+    }
+
+    /**
      * @param string $extensionKey
      * @param null|string $extensionValue
      */
@@ -314,7 +377,8 @@ class ApiProblem extends Exception
      */
     protected function declareAndSetLink()
     {
-        return sprintf('Link: <%s>; rel="%s"; title="%s"', $this->problemType, $this->problemType, $this->title);
+        $value = sprintf('<%s>; rel="%s"; title="%s"', $this->problemType, $this->problemType, $this->title);
+        $this->setHeader('Link', $value);
     }
 
     /**
@@ -333,17 +397,18 @@ class ApiProblem extends Exception
                 $body = $this->toJson();
                 break;
         }
+        $this->setHeader('Content-Type', $format);
         $link = $this->declareAndSetLink();
-        $contentType = sprintf('Content-Type:%s', $format);
         if ($terminate === true && (defined('PHPUNIT_TEST_ACTIVE') && !PHPUNIT_TEST_ACTIVE)) {
             ob_clean();
             if (!headers_sent()) {
-                header($contentType);
-                header($link);
+                $this->flushHeaders(true);
+            } else {
+                trigger_error('headers sent, unable to send zircote/ApiProblem header content', E_WARNING);
             }
             exit($body);
         } elseif (defined('PHPUNIT_TEST_ACTIVE') && PHPUNIT_TEST_ACTIVE) {
-            return $contentType . "\r\n" . $link . "\r\n\r\n" . $body;
+            return $this->flushHeaders()  . "\r\n" . $body;
         } else {
             return $body;
         }

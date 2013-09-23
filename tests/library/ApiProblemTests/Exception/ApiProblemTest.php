@@ -38,7 +38,7 @@ class ApiProblemTest extends \PHPUnit_Framework_TestCase
     public function testSendResponseJson()
     {
         $expected = 
-            'Content-Type:application/api-problem+json' 
+            'Content-Type: application/api-problem+json' 
             . "\r\n" 
             . 'Link: <http://api-problem.domain.com/some-url.html>; rel="http://api-problem.domain.com/some-url.html";'
             . ' title="It\'s Broken"'
@@ -53,7 +53,7 @@ class ApiProblemTest extends \PHPUnit_Framework_TestCase
     public function testSendResponseXml()
     {
         $expected = 
-            'Content-Type:application/api-problem+xml' 
+            'Content-Type: application/api-problem+xml' 
             . "\r\n" 
             . 'Link: <http://api-problem.domain.com/some-url.html>; rel="http://api-problem.domain.com/some-url.html";'
             . ' title="It\'s Broken"'
@@ -73,7 +73,7 @@ class ApiProblemTest extends \PHPUnit_Framework_TestCase
     public function testSendResponseExtensionsXml()
     {
         $expected = 
-            'Content-Type:application/api-problem+xml' 
+            'Content-Type: application/api-problem+xml' 
             . "\r\n" 
             . 'Link: <http://api-problem.domain.com/some-url.html>; rel="http://api-problem.domain.com/some-url.html";'
             . ' title="It\'s Broken"'
@@ -98,7 +98,7 @@ class ApiProblemTest extends \PHPUnit_Framework_TestCase
     public function testSendResponseExtensionsJson()
     {
         $expected = 
-            'Content-Type:application/api-problem+json' 
+            'Content-Type: application/api-problem+json' 
             . "\r\n" 
             . 'Link: <http://api-problem.domain.com/some-url.html>; rel="http://api-problem.domain.com/some-url.html";'
             . ' title="It\'s Broken"'
