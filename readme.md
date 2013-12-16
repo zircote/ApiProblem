@@ -176,3 +176,4 @@ Link: <http://api-problem.domain.com/some-url.html>; rel="http://api-problem.dom
 }
 
 ```
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zircote/apiproblem/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
